@@ -1,0 +1,16 @@
+/* Name de processus; Temps d'arrivé; Temps d'exécution; Priorité*/
+P1;0;7;2
+
+/* Processus2 */
+P7;4;1;4
+
+/* Name de processus; Temps d'arrivé; Temps d'exécution; Priorité*/
+P4;1;3;4
+/* Name de processus; Temps d'arrivé; Temps d'exécution; Priorité*/
+P2;0;4;3
+/* Name de processus; Temps d'arrivé; Temps d'exécution; Priorité*/
+P6;2;4;1
+/* Name de processus; Temps d'arrivé; Temps d'exécution; Priorité*/
+P3;1;6;1
+/* Name de processus; Temps d'arrivé; Temps d'exécution; Priorité*/
+P5;1;2;3
