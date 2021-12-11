@@ -1,5 +1,6 @@
 #include "../../main.h"
-
+ 
+ 
 void permut(processStruct *A, processStruct *B)
 {
   processStruct tmp;
