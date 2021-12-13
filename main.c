@@ -48,8 +48,9 @@ int main(int argc, char *argv[])
         // Print the dynamic menu
         do
         {
-            printf("*********************      Menu       ***********************\n");
-            printf("Select an option: \n");
+            printf("*****************  Scheduling Algorithms  ******************\n");
+            printf("\n");
+            
             AlgorithmsListCopy=AlgorithmsList;
 
             // print algorithms names
@@ -61,7 +62,10 @@ int main(int argc, char *argv[])
             // Add "Quit" option
             printf("  %d) Quit \n", algoNameCounter + 1);
             // Read user choice
+            printf("\n");
+            printf("Select an option: ");
             scanf("%d", &menuChoice);
+            printf("\n");
             if (menuChoice - 1 < algoNb)
             {
                 // Find the chosen algorithm build path

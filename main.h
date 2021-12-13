@@ -152,7 +152,7 @@ void ProcessListPrint(Node* processList, int processListLength)
 {
     Node* processListCopy=processList;
     printf("\n");
-    printf("*********************Table of processes**********************\n");
+    printf("******************  Table of processes  ********************\n");
     printf("\n");
     printf("+-----------------------------------------------------------+\n");
     printf("|  Processes  |  Arrival time  |  Brust time  |  Priority   | \n");
