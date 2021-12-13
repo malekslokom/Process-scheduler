@@ -221,7 +221,17 @@ typedef struct GanttList
     GanttProcess process;
     struct GanttList *next;
 } GanttList;
-
+// This function return the length of gantt linked list
+int lengthGantt(GanttList *list)
+{
+    int length = 0;
+    GanttList *current;
+    for (current = list; current != NULL; current = current->next)
+    {
+        length++;
+    }
+    return length;
+}
 // This function prints contents of gantt linked list
 void printListGantt(GanttList *n)
 {

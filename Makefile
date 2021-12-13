@@ -9,9 +9,6 @@ SRC_FILES := $(wildcard $(SRC_DIR)/*.c)
 target= main
 
 all: $(SRC_FILES:$(SRC_DIR)/%.c=$(BUILD_DIR)/%) $(target)
-	chmod u+rx $(target)
-	chmod u+rx $(BUILD_DIR)
-	chmod u+rx $(SRC_DIR)
 
 $(target): $(target).c $(target).h
 	$(CC) $(CFLAGS) $(target).c -o $(target)
@@ -20,7 +17,10 @@ $(target): $(target).c $(target).h
 $(BUILD_DIR)/%: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) $< -o $@
 	
-
+permissions:
+	chmod u+rx $(target)
+	chmod u+rx $(BUILD_DIR)
+	chmod u+rx $(SRC_DIR)
 
 help:
 	@echo "src: $(SRC_FILES)"

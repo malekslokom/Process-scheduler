@@ -1,6 +1,5 @@
 #include "../../main.h"
- 
- 
+
 void permut(processStruct *A, processStruct *B)
 {
   processStruct tmp;
@@ -8,25 +7,28 @@ void permut(processStruct *A, processStruct *B)
   *A = *B;
   *B = tmp;
 }
-void SRT(Node* processList,int n)
+void SRT(Node *processList, int n)
 {
 
-  int i, j, id, gantt[100][3], c, Counter = 0, TimeCPU = 0, tmp;
+  int i,id, gantt[100][3], c, Counter = 0, TimeCPU = 0, tmp;
   //  gantt matrice de la forme:
   //  Processus_Id     Temps_de_debut_d'execution    Terminer(0:Name /1:Oui)
   //  Processus_Id: si le nom de processus=P1 alors id=1, -1 si processus Idle
-  int* Burst =  malloc(n * sizeof(int));
-  Node* processListCopy=processList;
-  Node* processListCopyFirst=processList;
+  int *Burst = malloc(n * sizeof(int));
+  Node *processListCopy = processList;
+  Node *processListCopyFirst = processList;
+  GanttList *ganttCopy = NULL;
+  GanttList *gant = NULL;
+  GanttProcess GanttProccess;
   for (i = 0; i < n; i++)
   {
     Burst[i] = processListCopy->process.TE;
-    processListCopy=processListCopy->next;
+    processListCopy = processListCopy->next;
   }
 
   while (1)
   {
-    processListCopy=processList->next;
+    processListCopy = processList->next;
     // deplacer le processus qui admet le TE et TA minimale à la 1ere case de tableau
     for (i = 1; i < n; i++)
     {
@@ -38,35 +40,45 @@ void SRT(Node* processList,int n)
         Burst[0] = Burst[i];
         Burst[i] = tmp;
       }
-      processListCopy=processListCopy->next;
+      processListCopy = processListCopy->next;
     }
-
     if (Burst[0] == 0 || processListCopyFirst->process.TA > TimeCPU)
     {
       // CPU Idle
       if (Counter == 0 || gantt[Counter - 1][0] != -1)
       {
-
+        GanttProccess.Name = "Idle";
+        GanttProccess.Start = TimeCPU;
         gantt[Counter][0] = -1;
         gantt[Counter++][1] = TimeCPU;
+        addLastGantt(&gant, GanttProccess);
       }
     }
     else if (Burst[0] != 0)
     {
-
       id = atoi(strtok(processListCopyFirst->process.Name, "P"));
       if (Counter == 0 || gantt[Counter - 1][0] != id)
       {
         gantt[Counter][0] = id;
         gantt[Counter][2] = 0;
         gantt[Counter++][1] = TimeCPU;
+        printf("%s \n",processList->process.Name);
+        GanttProccess.Name = processList->process.Name;
+        printf("%s \n",GanttProccess.Name);
+        GanttProccess.Start = TimeCPU;
+        GanttProccess.Finished = 0;
+        addLastGantt(&gant, GanttProccess);
+        printListGantt(gant);
       }
       Burst[0] = Burst[0] - 1;
-
+      ganttCopy = gant;
+      for (int j = 0; j < Counter - 1; j++)
+        ganttCopy = ganttCopy->next;
       if (Burst[0] == 0)
       {
         //terminer=1
         gantt[Counter - 1][2] = 1;
+        ganttCopy->process.Finished = 1;
       }
     }
 
@@ -82,69 +94,19 @@ void SRT(Node* processList,int n)
     if (c == 0)
       //Tous les processus sont finis
       break;
+    
   }
-
-  gantt[Counter][1] = TimeCPU;
+  ganttCopy = gant;
+  for (int j = 0; j < Counter - 1; j++)
+    ganttCopy = ganttCopy->next;
+  gantt[Counter - 1][1] = TimeCPU;
+  ganttCopy->process.End = TimeCPU;
+  GanttDisplay(gant, Counter);
   printf("Process Scheduling: SRT- Shortest Remaining Time \n");
   printf("\n");
   printf("Gantt Chart \n");
-  
-  //affichage de Gantt Chart
-  for (i = 0; i < Counter; i++)
-  {
-    printf("+--");
-    for (j = 0; j < gantt[i + 1][1] - gantt[i][1]; j++)
-      printf("--");
-  }
-  printf("+\n");
-  for (i = 0; i < Counter; i++)
-  {
-    printf("\033[0m");
-    printf("|");
-    if (gantt[i][2] == 1)
-    {
-      printf("\033[41;37m");
-      printf("P%d", gantt[i][0]);
-      printf("\033[0m");
-    }
-    else
-    {
-      printf("\033[0m");
-      printf("P%d", gantt[i][0]);
-    }
-    for (j = 0; j < gantt[i + 1][1] - gantt[i][1]; j++)
-    {
-      if (gantt[i][2] == 1)
-      {
-        printf("\033[41;37m");
-        printf("  ");
-        printf("\033[0m");
-      }
-      else
-      {
-        printf("\033[0m");
-        printf("  ");
-      }
-    }
-  }
-  printf("| \n");
-  for (i = 0; i < Counter; i++)
-  {
-    printf("+--");
-    for (j = 0; j < gantt[i + 1][1] - gantt[i][1]; j++)
-      printf("--");
-  }
-  printf("+\n");
-  for (i = 0; i < Counter; i++)
-  {
-    if (gantt[i][1] < 10)
-      printf("%d  ", gantt[i][1]);
-    else
-      printf("%d ", gantt[i][1]);
-    for (j = 0; j < gantt[i + 1][1] - gantt[i][1]; j++)
-      printf("  ");
-  }
-  printf("%d \n", gantt[Counter - 1][1]);
+
+ printListGantt(gant);
 }
 
 int main(int argc, char *argv[])

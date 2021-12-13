@@ -2,7 +2,7 @@
 
 void RR(Node* processList,int n)
 {
-    int i, finishedProcess = 0, Q, len = 0;// prevfinishedProcess;
+    int i, finishedProcess = 0, Q, len = 0;
     int* burstTime=malloc(n * sizeof(int));
     
     // Front: the head of the pending processes table
