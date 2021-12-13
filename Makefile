@@ -15,6 +15,7 @@ $(target): $(target).c $(target).h
 
 
 $(BUILD_DIR)/%: $(SRC_DIR)/%.c
+	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $< -o $@
 	
 permissions:

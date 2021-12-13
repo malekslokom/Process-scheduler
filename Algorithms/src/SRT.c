@@ -68,7 +68,7 @@ void SRT(Node *processList, int n)
         GanttProccess.Start = TimeCPU;
         GanttProccess.Finished = 0;
         addLastGantt(&gant, GanttProccess);
-        printListGantt(gant);
+        printListGantt(gant); 
       }
       Burst[0] = Burst[0] - 1;
       ganttCopy = gant;

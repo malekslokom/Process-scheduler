@@ -30,7 +30,6 @@ int main(int argc, char *argv[])
     Algorithm* AlgorithmsList=NULL;
     Algorithm* AlgorithmsListCopy=NULL;
     int algoNb = 0;
-
     // Save all processes in the config file in process linked list
     getProcessListFromFile(argv[1]);
 
