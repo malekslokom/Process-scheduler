@@ -81,6 +81,7 @@ int main(int argc, char *argv[])
                 // Execute the algorithm chosen by the user
                 system(path);
             }
+            
         } while ((menuChoice - 1 != algoNb));// Quit if user chose "Quit" menu option
     }
     else

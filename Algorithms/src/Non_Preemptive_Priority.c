@@ -78,7 +78,7 @@ void Non_Preemptive_Priority(Node* processList,int n)
                 //CPU Idle
                 // Save the CPU Idle time detail in "GanttProccess"
                 GanttProccess.Start=count;
-                GanttProccess.Name="Idle";
+                GanttProccess.Name= "  ";
                 GanttProccess.Finished=0;
                 
                 // Add the CPU Idle time to Gantt linked list

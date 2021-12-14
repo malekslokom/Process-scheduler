@@ -56,7 +56,7 @@ void RR(Node* processList,int n)
                     //CPU Idle
                     // Save the CPU Idle time detail in "GanttProccess"
                     GanttProccess.Start = count;
-                    GanttProccess.Name = "Idle";
+                    GanttProccess.Name =  "  ";
 
                     // Add the CPU Idle time to Gantt linked list
                     addLastGantt(&gantt,GanttProccess);
@@ -131,7 +131,11 @@ void RR(Node* processList,int n)
             // Add the executed process to Gantt linked list
             addLastGantt(&gantt,GanttProccess);
         }
+
     }
+            //addLastGantt(&gantt,GanttProccess);
+            ganttCounter++;
+
     // Print the gantt chart
     GanttDisplay(gantt,ganttCounter);
     ganttCounter++;

@@ -249,7 +249,6 @@ void addLastGantt(GanttList* *head, GanttProcess val)
     GanttList* newNode = malloc(sizeof(GanttList));
     newNode->process = val;
     newNode->next   = NULL;
-
     if(*head == NULL)
         //If head is NULL, use the new node as head
          *head = newNode;
@@ -266,7 +265,9 @@ void addLastGantt(GanttList* *head, GanttProcess val)
 
         //Add the newNode at the end of the linked list
         lastNode->next = newNode;
+        
     }
+
 }
 
 

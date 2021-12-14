@@ -36,7 +36,7 @@ void FCFS(Node* processList,int n)
             // Save the CPU Idle time detail in "GanttProccess"
             GanttProccess.Start=Count_CPU;
             GanttProccess.End=l->process.TA;
-            GanttProccess.Name="Idle";
+            GanttProccess.Name= "  ";
             GanttProccess.Finished=0;
 
             // Add the CPU Idle time to Gantt linked list
@@ -44,7 +44,19 @@ void FCFS(Node* processList,int n)
             ganttCounter++;
 
             // Update the CPU execution time
-            Count_CPU=l->process.TA+l->process.TE;
+            Count_CPU=l->process.TA;
+            // Update the CPU execution time
+            Count_CPU=Count_CPU+l->process.TE;
+
+            // Save executed process details in "GanttProccess"
+            GanttProccess.Start=Count_CPU-l->process.TE;
+            GanttProccess.End=Count_CPU;
+            GanttProccess.Name=l->process.Name;
+            GanttProccess.Finished=1;
+
+            // Add the executed process to Gantt linked list
+            addLastGantt(&gantt,GanttProccess);
+            ganttCounter++;
         }
         l=l->next;
     }

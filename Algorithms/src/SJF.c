@@ -65,7 +65,7 @@ void SJF(Node* processList,int n)
 
             // Save the CPU Idle time detail in "GanttProccess"
             GanttProccess.Start=count;
-            GanttProccess.Name="Idle";
+            GanttProccess.Name= "  ";
             GanttProccess.Finished=0;
             // Update the CPU execution time
             count++;
