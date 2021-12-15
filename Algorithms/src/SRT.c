@@ -13,12 +13,12 @@ void SRT(Node* processList,int n)
 
   int i, j, id, gantt[100][3], c, Counter = 0, TimeCPU = 0, tmp;
   //  gantt matrice de la forme:
-  //  Processus_Id     Temps_de_debut_d'execution    Terminer(0:Name /1:Oui)
-  //  Processus_Id: si le nom de processus=P1 alors id=1, -1 si processus Idle
+  //  Processus_Id     Start_execution    finished(0:Name /1:Oui)
+  //  Processus_Id: sif the process name=P1 then id=1, -1 if the CPU Idle
   int* Burst =  malloc(n * sizeof(int));
   Node* processListCopy=processList;
   Node* processListCopyFirst=processList;
-
+  // Save the processes burst in a dynamic table
   for (i = 0; i < n; i++)
   {
     Burst[i] = processListCopy->process.TE;
@@ -28,12 +28,14 @@ void SRT(Node* processList,int n)
   while (1)
   {
     processListCopy=processList->next;
-    // deplacer le processus qui admet le TE et TA minimale à la 1ere case de tableau
+    // Find the process with the shortest arrival and burst time
+    // And insert it in the first index
     for (i = 1; i < n; i++)
     {
 
       if ((Burst[0] == 0 || TimeCPU < processListCopyFirst->process.TA ? 1 : Burst[i] < Burst[0] || (Burst[i] == Burst[0] && processListCopy->process.TA < processListCopyFirst->process.TA)) && (TimeCPU >= processListCopy->process.TA) && (Burst[i] != 0))
       {
+        //permut
         permut(&processListCopyFirst->process, &processListCopy->process);
         tmp = Burst[0];
         Burst[0] = Burst[i];
@@ -47,17 +49,18 @@ void SRT(Node* processList,int n)
       // CPU Idle
       if (Counter == 0 || gantt[Counter - 1][0] != -1)
       {
-
+        // Save executed process details in "Gantt"
         gantt[Counter][0] = -1;
         gantt[Counter++][1] = TimeCPU;
       }
     }
     else if (Burst[0] != 0)
     {
-
+      // Extract the process id from the process name
       id = atoi(strtok(processListCopyFirst->process.Name, "P"));
       if (Counter == 0 || gantt[Counter - 1][0] != id)
       {
+        // Save executed process details in "Gantt"
         gantt[Counter][0] = id;
         gantt[Counter][2] = 0;
         gantt[Counter++][1] = TimeCPU;
@@ -66,7 +69,7 @@ void SRT(Node* processList,int n)
 
       if (Burst[0] == 0)
       {
-        //terminer=1
+        //Finished=1
         gantt[Counter - 1][2] = 1;
       }
     }
@@ -76,12 +79,13 @@ void SRT(Node* processList,int n)
 
     for (i = 0; i < n; i++)
     {
+      // Verify if all the processes finished their burst time
       if (Burst[i] != 0)
         c = 1;
     }
 
     if (c == 0)
-      //Tous les processus sont finis
+      // All processes finished their burst time
       break;
   }
   gantt[Counter][1] = TimeCPU;
